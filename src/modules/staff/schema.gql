@@ -1,5 +1,6 @@
 type Query {
-  staffs: [Staff!]!
+  staffs(pagination: Pagination = {}, search: String): [Staff!]!
+  staff(staffId: ID!): Staff
 }
 
 type Staff {
@@ -8,4 +9,5 @@ type Staff {
   staffBirthDate: String!
   staffWorkPlace: String!
   fullAdress: String!
+  staffCreatedAt: String!
 }

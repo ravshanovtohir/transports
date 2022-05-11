@@ -1,0 +1,15 @@
+scalar Link
+
+## pagination input
+
+input Pagination {
+  page: Int
+  limit: Int
+}
+
+## enum types
+
+enum SortOptions {
+  toLargest
+  toSmallest
+}

@@ -27,6 +27,7 @@ create table staffs (
     staff_password varchar(32) not null,
     staff_birth_date varchar(10) not null,
     staff_is_root boolean default false,
+    staff_created_at timestamptz default current_timestamp,
     branche_id int not null references branches(branche_id)
 );
 
@@ -73,7 +74,9 @@ select
     s.staff_id,
     s.staff_name,
     s.staff_birth_date,
-    b.branche_name
+    b.branche_name,
+    s.staff_created_at,
+    CONCAT(b.branche_name, ' ', b.branche_address) as full_adress
 from staffs as s
 inner join branches as b on s.branche_id = b.branche_id
 ;
