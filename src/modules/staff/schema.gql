@@ -1,0 +1,11 @@
+type Query {
+  staffs: [Staff!]!
+}
+
+type Staff {
+  staffId: ID!
+  staffname: String!
+  staffBirthDate: String!
+  staffWorkPlace: String!
+  fullAdress: String!
+}
