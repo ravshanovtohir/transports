@@ -13,3 +13,18 @@ enum SortOptions {
   toLargest
   toSmallest
 }
+
+type MutationResponse {
+  status: Int!
+  message: String!
+  data: GlobalType!
+}
+
+type AuthResponse {
+  status: Int!
+  message: String!
+  token: String
+  data: GlobalType
+}
+
+union GlobalType = Staff

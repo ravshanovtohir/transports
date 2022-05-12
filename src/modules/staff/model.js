@@ -16,6 +16,16 @@ async function getStaff({ staffId }) {
     return staff
 }
 
+async function loginStaff({ staffname, staffPassword }) {
+    const [staff] = await db(query.LOGIN_STAFF, staffname, staffPassword)
+    return staff
+}
+
+async function registerStaff({ staffname, staffpassword, staffBirthDate, brancheId }) {
+    const [staff] = await db(query.LOGIN_STAFF, staffname, staffPassword, staffBirthDate, brancheId)
+    return staff
+}
+
 // async function getFood({ foodId }) {
 //     const [food] = await db(query.GET_FOOD, foodId)
 //     return food
@@ -23,5 +33,6 @@ async function getStaff({ staffId }) {
 
 export default {
     getStaffs,
-    getStaff
+    getStaff,
+    loginStaff
 }

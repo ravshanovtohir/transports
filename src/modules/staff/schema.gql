@@ -3,6 +3,11 @@ type Query {
   staff(staffId: ID!): Staff
 }
 
+type Mutation {
+  login(staffname: String!, staffPassword: String!): AuthResponse!
+  mutation
+}
+
 type Staff {
   staffId: ID!
   staffname: String!

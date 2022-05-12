@@ -8,7 +8,7 @@ import http from 'http';
 
 import "#config/index"
 
-console.log(process.env.PG_USER);
+import context from "./context.js"
 
 
 import schema from "./modules/index.js"
@@ -18,6 +18,7 @@ async function startApolloServer() {
     const httpServer = http.createServer(app);
     const server = new ApolloServer({
         schema,
+        context,
         csrfPrevention: true,
         introspection: true,
         plugins: [
