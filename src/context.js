@@ -8,17 +8,22 @@ export default ({ req, res }) => {
 
         const reqAgent = req.headers['user-agent']
         const TOKEN = req.headers.token
-        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+        const ipp = req.headers['x-forwarded-for'] || req.socket.remoteAddress
 
         if (fieldName == "__schema") return
 
         if (["login", "register"].includes(fieldName)) {
             return {
-                agent: reqAgent
+                agent: reqAgent,
+                ip: ipp
             }
         }
 
-        const {  agent } = JWT.verify(TOKEN)
+        if (!TOKEN) {
+            throw new Error("User is un authorizate!")
+        }
+
+        const { agent, staffId, branchId, ip } = JWT.verify(TOKEN)
 
         if (agent !== reqAgent) {
             throw new Error("Invalid Token")
@@ -27,9 +32,14 @@ export default ({ req, res }) => {
         return {
             host: `http://${host({ internal: false })}:${process.env.PORT}/`,
             token: req.headers.token,
-            ip
+            ip,
+            agent,
+            staffId,
+            branchId
         }
     } catch (error) {
         throw error
     }
 }
+
+// token: JWT.sign({ agent, ip, staffId: check.staff_id, branchId: check.branch_name, isRoot: check.staff_is_root }),

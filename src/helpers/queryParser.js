@@ -30,13 +30,13 @@ export default function(body) {
             const argName = arg?.name?.value
             const paramName = arg?.value?.name?.value
 
-            if (arg.value.kind !== 'Variable') {
-                throw new Error(`The ${argName} argument of ${fieldName} ${operation} must be Variable! Entered ${arg.value.kind}`)
-            }
+            // if (arg.value.kind !== 'Variable') {
+            //     throw new Error(`The ${argName} argument of ${fieldName} ${operation} must be Variable! Entered ${arg.value.kind}`)
+            // }
 
-            if (argName !== paramName) {
-                throw new Error(`The value of ${argName} argument of ${fieldName} ${operation} must be $${argName}. Entered $${paramName}`)
-            }
+            // if (argName !== paramName) {
+            //     throw new Error(`The value of ${argName} argument of ${fieldName} ${operation} must be $${argName}. Entered $${paramName}`)
+            // }
         }
 
         return body.variables

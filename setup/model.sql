@@ -1,3 +1,4 @@
+\c postgres;
 -- drop database if exists
 drop database if exists moce_info;
 
@@ -20,11 +21,11 @@ create table branches (
     branche_created_at timestamptz default current_timestamp
 );
 
-drop table if exists staffs;
+drop table if exists staffs cascade;
 create table staffs (
     staff_id serial not null primary key,
-    staff_name varchar(64) not null,
-    staff_password varchar(32) not null,
+    staff_name varchar(128) not null unique,
+    staff_password varchar(255) not null,
     staff_birth_date varchar(10) not null,
     staff_is_root boolean default false,
     staff_created_at timestamptz default current_timestamp,
@@ -64,6 +65,17 @@ create table permissions_branches (
     branche_read boolean default false,
     branche_delete boolean default false,
     branche_update boolean default false,
+    branche_id int not null references branches(branche_id),
+    staff_id int references staffs(staff_id)
+);
+
+drop table if exists permissions_staffs;
+create table permissions_staffs (
+    staff_permission_id serial not null primary key,
+    staff_create boolean default false,
+    staff_read boolean default false,
+    staff_delete boolean default false,
+    staff_update boolean default false,
     branche_id int not null references branches(branche_id),
     staff_id int references staffs(staff_id)
 );
@@ -125,3 +137,27 @@ where
 
 
 delete from staffs where staff_id > 3;
+
+
+
+drop table if exists staffs;
+create table staffs (
+    staff_id serial not null primary key,
+    staff_name varchar(64) not null unique,
+    staff_password varchar(255) not null,
+    staff_birth_date varchar(10) not null,
+    staff_is_root boolean default false,
+    staff_created_at timestamptz default current_timestamp,
+    branche_id int not null references branches(branch_id)
+);
+
+drop table if exists staffs;
+create table staffs (
+    staff_id serial not null primary key,
+    staff_name varchar(64) not null,
+    staff_password varchar(32) not null,
+    staff_birth_date varchar(10) not null,
+    staff_is_root boolean default false,
+    staff_created_at timestamptz default current_timestamp,
+    branche_id int not null references branches(branche_id)
+);
