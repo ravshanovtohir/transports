@@ -5,7 +5,13 @@ type Query {
 
 type Mutation {
   login(staffname: String!, staffPassword: String!): AuthResponse!
-  mutation
+  register(
+    staffname: String!
+    staffPassword: String!
+    confirmPassword: String!
+    staffBirthDate: String!
+    brancheId: ID!
+  ): AuthResponse!
 }
 
 type Staff {

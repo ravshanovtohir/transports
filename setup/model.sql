@@ -122,3 +122,6 @@ from staffs as s
 inner join branches as b on s.branche_id = b.branche_id
 where staff_id = $1
 where
+
+
+delete from staffs where staff_id > 3;

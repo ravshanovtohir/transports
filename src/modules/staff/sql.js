@@ -42,14 +42,16 @@ where s.staff_name = $1 and s.staff_password = $2
 `
 
 const REGISTER_STAFF = `
-    insert into staffs (staff_name, staff_password, staff_birth_date, staff_is_root, branche_id) values
+    insert into staffs (staff_name, staff_password, staff_birth_date, branche_id) values
     ($1, $2, $3, $4)
     returning *
     ;
 `
 
+
 export default {
     GET_STAFFS,
     GET_STAFF,
-    LOGIN_STAFF
+    LOGIN_STAFF,
+    REGISTER_STAFF,
 }

@@ -8,6 +8,7 @@ export default ({ req, res }) => {
 
         const reqAgent = req.headers['user-agent']
         const TOKEN = req.headers.token
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
 
         if (fieldName == "__schema") return
 
@@ -17,7 +18,7 @@ export default ({ req, res }) => {
             }
         }
 
-        const { staffId, agent } = JWT.verify(TOKEN)
+        const {  agent } = JWT.verify(TOKEN)
 
         if (agent !== reqAgent) {
             throw new Error("Invalid Token")
@@ -26,7 +27,7 @@ export default ({ req, res }) => {
         return {
             host: `http://${host({ internal: false })}:${process.env.PORT}/`,
             token: req.headers.token,
-            staffId
+            ip
         }
     } catch (error) {
         throw error

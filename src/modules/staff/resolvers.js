@@ -18,7 +18,7 @@ export default {
     },
 
     Mutation:{
-        login: async(_, args, {agent}) => {
+        login: async(_, args, {agent, ip}) => {
             const staff = await model.loginStaff(args)
             
             if (!staff) {
@@ -33,11 +33,59 @@ export default {
             return{
                 status: 201,
                 message: "The staff succesfully logged in",
-                token: JWT.sign({ staffId: staff.staff_id, agent, staffname: staff.staff_name }),
+                token: JWT.sign({ staffId: staff.staff_id, agent, ip, staffname: staff.staff_name }),
                 data: staff
             }
         },
-        
+
+        register: async(_, args, {agent, ip}) => {
+            let { staffname, staffPassword, confirmPassword, staffBirthDate, brancheId } = args
+            const staff = await model.registerStaff(staffname, staffPassword, staffBirthDate, brancheId)
+            
+             const staffs = await model.getStaffs({
+                page: args.page ? args.page : STAFF_CONFIG.PAGINATION.PAGE,
+                limit: args.limit ? args.limit : STAFF_CONFIG.PAGINATION.LIMIT,
+                search: args.search
+            })
+
+            console.log(staffs)
+
+            const user = staffs.find(el=> el.staff_name == staff.staff_name)
+
+            if(user){
+                throw new Error("This staff name already exists")
+            }
+
+            staffname = staffname.trim()
+            staffPassword = staffPassword.trim()
+            confirmPassword = confirmPassword.trim()
+
+            if(
+                !staffname ||
+                staffname.length > 50
+            ) {
+                throw new Error("The username cannot be empty!")
+            }
+
+            if((
+                !staffPassword || staffPassword.length < 6 ||
+                staffPassword.length > 50) || 
+                (
+                    !confirmPassword || confirmPassword.length < 6 ||
+                    confirmPassword.length > 50
+                ) || staffPassword !== confirmPassword
+            ) {
+                throw new Error("Invalid password!")
+            }
+
+            return{
+                status: 201,
+                message: "The staff succesfully logged in",
+                token: JWT.sign({ staffId: staff.staff_id, agent, ip,  staffname: staff.staff_name }),
+                data: staff
+            }
+        },
+
     },
 
     Staff: {
