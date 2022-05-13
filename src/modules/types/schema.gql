@@ -27,4 +27,4 @@ type AuthResponse {
   data: GlobalType
 }
 
-union GlobalType = Staff
+union GlobalType = Staff | Branch

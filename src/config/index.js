@@ -11,15 +11,15 @@ export const STAFF_CONFIG = {
 }
 
 
-// export const FOOD_CONFIG = {
-//     PAGINATION: {
-//         LIMIT: 10,
-//         PAGE: 1
-//     }
-// }
-// export const ORDER_CONFIG = {
-//     PAGINATION: {
-//         LIMIT: 10,
-//         PAGE: 1
-//     }
-// }
+export const BRANCH_CONFIG = {
+    PAGINATION: {
+        LIMIT: 10,
+        PAGE: 1
+    }
+}
+export const TRANSPORT_CONFIG = {
+    PAGINATION: {
+        LIMIT: 10,
+        PAGE: 1
+    }
+}

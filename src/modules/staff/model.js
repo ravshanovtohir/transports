@@ -11,7 +11,7 @@ async function getStaffs({ page, limit, search }) {
 }
 
 async function getStaff({ staffId }) {
-    const staff = await db(query.GET_STAFF, staffId)
+    const [staff] = await db(query.GET_STAFF, staffId)
     return staff
 }
 
@@ -42,5 +42,6 @@ export default {
     loginStaff,
     registerStaff,
     staffPer,
-    registerStaff
+    registerStaff,
+    resStaffPer
 }

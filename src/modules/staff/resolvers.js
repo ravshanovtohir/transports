@@ -15,7 +15,8 @@ export default {
 
             console.log(1);
             let checkk = await model.getStaff({ staffId })
-            if (checkk[0].staff_is_root) {
+            console.log(checkk);
+            if (checkk.staff_is_root) {
                 let staff = await model
                     .getStaffs({
                         page: args.page ? args.page : STAFF_CONFIG.PAGINATION.PAGE,
@@ -65,7 +66,7 @@ export default {
             return {
                 status: 201,
                 message: "The staff succesfully logged in",
-                token: JWT.sign({ staffId: staff.staff_id, agent, ip, staffname: staff.staff_name, branchId: staff.branche_id }),
+                token: JWT.sign({ staffId: staff.staff_id, agent, ip, staffname: staff.staff_name, branchId: staff.branche_id, branchName: staff.branche_name, isRoot: staff.staff_is_root}),
                 data: staff
             }
         },
@@ -112,7 +113,7 @@ export default {
             return {
                 status: 201,
                 message: "The staff succesfully logged in",
-                token: JWT.sign({ staffId: staff.staff_id, agent, ip, staffname: staff.staff_name, brancheId }),
+                token: JWT.sign({ staffId: staff.staff_id, agent, ip, staffname: staff.staff_name, branchId: staff.branche_id, branchName: staff.branche_name, isRoot: staff.staff_is_root }),
                 data: staff
             }
         },

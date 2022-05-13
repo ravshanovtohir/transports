@@ -23,7 +23,7 @@ export default ({ req, res }) => {
             throw new Error("User is un authorizate!")
         }
 
-        const { agent, staffId, branchId, ip } = JWT.verify(TOKEN)
+        const { agent, staffId, branchId, ip, branchName, isRoot } = JWT.verify(TOKEN)
 
         if (agent !== reqAgent) {
             throw new Error("Invalid Token")
@@ -35,7 +35,9 @@ export default ({ req, res }) => {
             ip,
             agent,
             staffId,
-            branchId
+            branchId,
+            branchName,
+            isRoot
         }
     } catch (error) {
         throw error
