@@ -89,3 +89,16 @@ select
 from branches
 offset 1 limit 2
 ;
+
+
+    select
+        pb.branche_read,
+        pb.branche_id,
+        pb.branche_create,
+        pb.branche_delete,
+        pb.branche_update,
+        b.branche_name,
+        pb.staff_id
+    from permissions_branches pb
+    inner join branches b on pb.branche_id = b.branche_id
+    where pb.staff_id = 2 and b.branche_name = 'Farg''ona';

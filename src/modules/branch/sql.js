@@ -77,7 +77,7 @@ const BRANCH_PER = `
         pb.staff_id
     from permissions_branches pb
     inner join branches b on pb.branche_id = b.branche_id
-    where pb.staff_id = $1 and b.branche_name = $2::varchar;
+    where pb.staff_id = $1 and b.branche_name = $2;
 `
 
 const RES_BRANCH_PER = `

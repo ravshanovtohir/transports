@@ -7,8 +7,8 @@ import sha256 from "sha256"
 
 export default {
     Query: {
-        branches: async(_, args, {token}) => {
-            
+        branches: async(_, args, { token }) => {
+
             const { ip, agent, staffId, branchId, branchName, isRoot } = JWT.verify(token)
 
             let res = await model.branchPer({
@@ -17,10 +17,13 @@ export default {
             })
 
 
+
             let checkk = await modelUser.getStaff({ staffId })
-            console.log("che", checkk)
+
+
+
             if (checkk.staff_is_root) {
-            console.log("res", checkk)
+                console.log("res", checkk)
                 let branch = await model.getBranches({
                     page: args.page ? args.page : BRANCH_CONFIG.PAGINATION.PAGE,
                     limit: args.limit ? args.limit : BRANCH_CONFIG.PAGINATION.LIMIT,
@@ -31,7 +34,9 @@ export default {
                 return branch
             }
 
-            if (res[0]?.branche_read) {
+            console.log("res", staffId, branchName)
+
+            if (res[0]?.branche_read == true) {
                 let branch = await model.getBranches({
                     page: args.page ? args.page : BRANCH_CONFIG.PAGINATION.PAGE,
                     limit: args.limit ? args.limit : BRANCH_CONFIG.PAGINATION.LIMIT,
@@ -40,8 +45,13 @@ export default {
                 console.log("res", branch)
 
                 return branch
-            } else {
-                return await model.getBranch({branchId})
+            } 
+            if(!(checkk.staff_is_root && res[0].branche_read == true)){
+                let a =  await model.getBranch({ branchId })
+                return [a]
+            }
+            else {
+                return await model.getBranch({ branchId })
             }
         },
         branch: async(_, args) => {
@@ -50,7 +60,7 @@ export default {
     },
 
     Mutation: {
-        addBranch: async(_, args, {token}) => {
+        addBranch: async(_, args, { token }) => {
 
             const { ip, agent, staffId, branchName, branchId, isRoot } = JWT.verify(token)
 
@@ -146,8 +156,8 @@ export default {
 
         },
 
-        changeBranch: async(_, args, {token}) => {
-            
+        changeBranch: async(_, args, { token }) => {
+
             const { ip, agent, staffId, branchName, isRoot } = JWT.verify(token)
 
             let { branchId, branchname, branchAdress } = args
@@ -238,8 +248,8 @@ export default {
             }
         },
 
-        deleteBranch: async(_, args, {token}) => {
-            
+        deleteBranch: async(_, args, { token }) => {
+
             const { ip, agent, staffId, branchName, isRoot } = JWT.verify(token)
 
             let { branchId } = args
@@ -248,6 +258,7 @@ export default {
                 limit: args.limit ? args.limit : BRANCH_CONFIG.PAGINATION.LIMIT,
                 search: args.search
             })
+
 
 
             let checkk = await modelUser.getStaff({ staffId })
@@ -284,7 +295,7 @@ export default {
             } else {
                 return {
                     status: 400,
-                    message: 'You don\'t have permission!',
+                    message: 'You dont have permission!',
                     token: null,
                     data: null
                 }
@@ -296,6 +307,6 @@ export default {
         branchId: global => global.branche_id,
         branchname: global => global.branche_name,
         branchAdress: global => global.branche_address,
-        branchCreatedAt: global => global.branche_created_at
+        branchCreatedAt: global => global.branche_created_at.toISOString()
     }
 }

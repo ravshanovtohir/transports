@@ -17,7 +17,7 @@ enum SortOptions {
 type MutationResponse {
   status: Int!
   message: String!
-  data: GlobalType!
+  data: GlobalType
 }
 
 type AuthResponse {
