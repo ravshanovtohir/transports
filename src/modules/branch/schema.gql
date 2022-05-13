@@ -1,5 +1,5 @@
 type Query {
-  branches(page: Int, limit: Int, search: String): [Branch]!
+  branches(page: Int, limit: Int, search: String): Branch
   branch(branchId: ID!): Branch
 }
 

@@ -37,7 +37,7 @@ export default {
                     limit: args.limit ? args.limit : BRANCH_CONFIG.PAGINATION.LIMIT,
                     search: args.search
                 })
-                console.log("br", branch)
+                console.log("res", branch)
 
                 return branch
             } else {
