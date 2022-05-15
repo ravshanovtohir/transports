@@ -37,7 +37,8 @@ export default ({ req, res }) => {
             staffId,
             branchId,
             branchName,
-            isRoot
+            isRoot,
+            req
         }
     } catch (error) {
         throw error

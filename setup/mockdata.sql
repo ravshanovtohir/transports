@@ -29,3 +29,8 @@ insert into permissions_branches (branche_create, branche_read, branche_delete, 
 (false, false, false, false, 1, 2),
 (false, true, false, false, 3, 3)
 ;
+
+insert into permissions_staffs(staff_create, staff_read, staff_update, staff_delete, branch_id, staff_id) values 
+(true, true, true, true, 1, 1),
+(false, false, false, false, 2, 2),
+(false, true, false, false, 3, 3);

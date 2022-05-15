@@ -4,6 +4,9 @@ import {
     ApolloServerPluginLandingPageGraphQLPlayground
 } from 'apollo-server-core';
 import express from 'express';
+import { graphqlUploadExpress } from 'graphql-upload'
+import cors from "cors"
+import path from "path"
 import http from 'http';
 
 import "#config/index"
@@ -15,11 +18,20 @@ import schema from "./modules/index.js"
 
 async function startApolloServer() {
     const app = express();
+    app.use(graphqlUploadExpress())
+    app.use(cors())
+    app.use(express.static(path.join(process.cwd(), "uploads")))
+
     const httpServer = http.createServer(app);
     const server = new ApolloServer({
         schema,
         context,
-        csrfPrevention: true,
+        uploads: {
+            maxFileSize: 50000000, // 50 MB
+            maxFiles: 30,
+            maxFieldSize: 50000000 // 50 MB
+        },
+        csrfPrevention: false,
         introspection: true,
         plugins: [
             ApolloServerPluginDrainHttpServer({ httpServer }),
