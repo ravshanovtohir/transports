@@ -34,3 +34,8 @@ insert into permissions_staffs(staff_create, staff_read, staff_update, staff_del
 (true, true, true, true, 1, 1),
 (false, false, false, false, 2, 2),
 (false, true, false, false, 3, 3);
+
+insert into permissions_permission(permission_create, permission_read, permission_delete, permission_update, branche_id, staff_id) values 
+(true, true, true, true, 1, 1),
+(false, false, false, false, 2, 2),
+(false, true, false, false, 3, 3);

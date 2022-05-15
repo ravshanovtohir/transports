@@ -80,4 +80,14 @@ create table permissions_staffs (
     staff_id int references staffs(staff_id)
 );
 
+drop table if exists permissions_permission;
+create table permissions_permission (
+    permission_permission_id serial not null primary key,
+    permission_create boolean default false,
+    permission_read boolean default false,
+    permission_delete boolean default false,
+    permission_update boolean default false,
+    branche_id int not null references branches(branche_id),
+    staff_id int references staffs(staff_id)
+);
 
